@@ -1,23 +1,21 @@
+// LeetCode 788. Rotated Digits
+// Daily challenge: 2026-05-02
+#include <string>
+using namespace std;
+
 class Solution {
 public:
     int rotatedDigits(int n) {
-        int ans=0;
-        for(int i=1;i<=n;i++) {
-            int currans=0,temp=i;
-            while(temp!=0) {
-                int digit=temp%10;
-                if(digit==0 || digit==1 || digit==8) {}
-                else if(digit==2 || digit==5 || digit==6 || digit==9) {
-                    currans=1;
-                }
-                else {
-                    currans=0;
-                    break;
-                }
-                temp/=10;
+        int count = 0;
+        for (int i = 1; i <= n; i++) {
+            string s = to_string(i);
+            bool valid = true, changed = false;
+            for (char c : s) {
+                if (c == '3' || c == '4' || c == '7') { valid = false; break; }
+                if (c == '2' || c == '5' || c == '6' || c == '9') changed = true;
             }
-            ans+=currans;
+            if (valid && changed) count++;
         }
-        return ans;
+        return count;
     }
 };

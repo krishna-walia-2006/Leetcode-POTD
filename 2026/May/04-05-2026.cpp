@@ -1,12 +1,17 @@
+// LeetCode 48. Rotate Image
+// Daily challenge: 2026-05-04
+#include <vector>
+#include <algorithm>
+using namespace std;
+
 class Solution {
 public:
     void rotate(vector<vector<int>>& matrix) {
-        int m=matrix.size(),n=matrix[0].size();
-        for(int i=0;i<m;i++) {
-            for(int j=i+1;j<n;j++) {
-                swap(matrix[i][j],matrix[j][i]);
-            }
-        }
-        for(int i=0;i<m;i++) reverse(matrix[i].begin(),matrix[i].end());
+        int n = matrix.size();
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j < n; j++)
+                swap(matrix[i][j], matrix[j][i]);
+        for (int i = 0; i < n; i++)
+            reverse(matrix[i].begin(), matrix[i].end());
     }
 };

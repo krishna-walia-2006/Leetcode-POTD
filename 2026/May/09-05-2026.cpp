@@ -1,52 +1,32 @@
+// LeetCode 1914. Cyclically Rotating a Grid
+// Daily challenge: 2026-05-09
+#include <vector>
+using namespace std;
+
 class Solution {
 public:
     vector<vector<int>> rotateGrid(vector<vector<int>>& grid, int k) {
-        int m = grid.size();
-        int n = grid[0].size();
-        int r1 = 0, r2 = m - 1, c1 = 0, c2 = n - 1;
-        vector<int> arr;
-        vector<vector<int>> ans = grid;
-        
-        while(r1 < r2 && c1 < c2) {
-            for(int i = c1; i <= c2 - 1; i++) {
-                arr.push_back(grid[r1][i]);
-            }
-            for(int i = r1 ; i <= r2 - 1; i++) {
-                arr.push_back(grid[i][c2]);
-            }
-            for(int i = c2;i >= c1 + 1; i--) {
-                arr.push_back(grid[r2][i]);
-            }
-            for(int i = r2;i >= r1 + 1; i--) {
-                arr.push_back(grid[i][c1]);
-            }
-            int rot = k % arr.size();
-            reverse(arr.begin(),arr.begin()+rot);
-            reverse(arr.begin()+rot,arr.end());
-            reverse(arr.begin(),arr.end());
-            int j=0;
-            for(int i = c1; i <= c2 - 1; i++) {
-                ans[r1][i] = arr[j];
-                j++;
-            }
-            for(int i = r1 ; i <= r2 - 1; i++) {
-                ans[i][c2] = arr[j];
-                j++;
-            }
-            for(int i = c2;i >= c1 + 1; i--) {
-                ans[r2][i] = arr[j];
-                j++;
-            }
-            for(int i = r2;i >= r1 + 1; i--) {
-                ans[i][c1] = arr[j];
-                j++;
-            }
-            arr.clear();
-            r1++;
-            r2--;
-            c1++;
-            c2--;
-        }      
-        return ans;
+        int m = grid.size(), n = grid[0].size();
+        int layers = min(m, n) / 2;
+        for (int l = 0; l < layers; l++) {
+            int top = l, bottom = m-1-l, left = l, right = n-1-l;
+            vector<int> elems;
+            for (int j = left; j <= right; j++) elems.push_back(grid[top][j]);
+            for (int i = top+1; i <= bottom; i++) elems.push_back(grid[i][right]);
+            for (int j = right-1; j >= left; j--) elems.push_back(grid[bottom][j]);
+            for (int i = bottom-1; i > top; i--) elems.push_back(grid[i][left]);
+
+            int sz = elems.size();
+            int shift = k % sz;
+            vector<int> rotated(sz);
+            for (int idx = 0; idx < sz; idx++) rotated[idx] = elems[(idx + shift) % sz];
+
+            int pos = 0;
+            for (int j = left; j <= right; j++) grid[top][j] = rotated[pos++];
+            for (int i = top+1; i <= bottom; i++) grid[i][right] = rotated[pos++];
+            for (int j = right-1; j >= left; j--) grid[bottom][j] = rotated[pos++];
+            for (int i = bottom-1; i > top; i--) grid[i][left] = rotated[pos++];
+        }
+        return grid;
     }
 };

@@ -1,24 +1,28 @@
+// LeetCode 61. Rotate List
+// Daily challenge: 2026-05-05
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
-        if(!head || !head->next || k==0) return head;
-        ListNode* tail=head;
-        int n=1;
-        while(tail->next) {
-            tail=tail->next;
-            n++;
-        }
-        k=k%n;
-        tail->next=head;
-        k=n-k-1;
-        ListNode* newtail=head;
-        while(k!=0) {
-            k--;
-            newtail=newtail->next;
-        }
-        cout<<newtail->val;
-        ListNode* ans=newtail->next;
-        newtail->next=nullptr;
-        return ans;
+        if (!head || !head->next || k == 0) return head;
+        int length = 1;
+        ListNode* tail = head;
+        while (tail->next) { tail = tail->next; length++; }
+        k = k % length;
+        if (k == 0) return head;
+
+        ListNode* newTail = head;
+        for (int i = 0; i < length - k - 1; ++i) newTail = newTail->next;
+        ListNode* newHead = newTail->next;
+        newTail->next = nullptr;
+        tail->next = head;
+        return newHead;
     }
 };
