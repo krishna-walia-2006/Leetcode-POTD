@@ -1,6 +1,6 @@
 // LeetCode 3734. Lexicographically Smallest Palindromic Permutation Greater Than Target
 // Daily challenge: 2026-08-28
-//
+
 
 #include <string>
 #include <vector>
