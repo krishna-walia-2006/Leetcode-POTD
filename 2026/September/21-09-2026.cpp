@@ -10,7 +10,7 @@ public:
                 long long newRem = ((long long)oldRem*nums[i])%k;
                 curr[newRem]+=prev[oldRem]; 
             }
-            prev=move(curr);
+            prev=curr;
             for(int x=0;x<k;x++) result[x]+=prev[x];
         }
         return result;
