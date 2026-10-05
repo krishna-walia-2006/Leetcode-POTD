@@ -21,4 +21,4 @@ public:
         solve(n,n,n,ans,curr);
         return ans;
     }
-};
+}
