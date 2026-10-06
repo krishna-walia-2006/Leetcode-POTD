@@ -18,6 +18,6 @@ public:
             if(high<0) return false;
             if(low<0) low=0;
         }
-        return low==0;
+        return low==0?1:0;
     }
 };
