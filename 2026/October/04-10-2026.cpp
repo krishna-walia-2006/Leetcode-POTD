@@ -1,7 +1,6 @@
 class Solution {
 public:
-    
-bool checkValidString(string s) {
+    bool checkValidString(string s) {
         int low=0,high=0;
         for(char c: s) {
             if(c=='(') {
